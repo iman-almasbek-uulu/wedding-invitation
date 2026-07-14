@@ -1,0 +1,31 @@
+{
+  "_comment": "Все данные здесь можно менять! (Формат JSON требует кавычек)",
+  "groomName": "Санжар",
+  "brideName": "Касиет",
+  "weddingDate": "2026-08-23",
+  "weddingDay": "23",
+  "weddingMonth": "Август",
+  "weddingTime": "16:00",
+  "invitationTitle": "Уйлонуу тойго",
+  "invitationSubtitle": "Чакыруу",
+  "hostNameLeft": "Орозбек",
+  "hostNameRight": "Гульмира",
+  "venueName": "ресторан",
+  "venueDisplayName": "AZEM",
+  "venueStreet": "Баялы Исакеева к., 32",
+  "venueCity": "Кочкор",
+  "venueMapUrl": "https://2gis.kg/bishkek/geo/70000001079030752/75.752782,42.215872",
+  "invitationText": "Биз бул күндү өзгөчө кылгыбыз келет, андыктан сиздерди үйлөнүү үлпөтүбүздү биз менен бирге белгилөөгө чакырабыз!",
+  "contacts": [
+    {
+      "label": "Элдос",
+      "phone": "+996 700 000 001",
+      "whatsapp": "996700000001"
+    }
+  ],
+  "photos": {
+    "ogImage": "assets/images/photo.jpg",
+    "couplePhoto": "assets/images/image.jpeg"
+  },
+  "audioSrc": "assets/music/music.mp3"
+}
