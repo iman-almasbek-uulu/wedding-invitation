@@ -589,26 +589,9 @@ function applyConfig() {
 
   applyMapLinks()
 
-  const couplePhotoMarkers = [
-    'tild3732-3763-4834-a132-633765376635/photo.png',
-    'tild3436-3236-4432-a261-643032306231/photo.png',
-  ]
-  couplePhotoMarkers.forEach(marker => {
-    document.querySelectorAll(`img[src*="${marker}"]`).forEach(img => {
-      img.src = cfg.photos.couplePhoto
-    })
-    document.querySelectorAll(`[data-original*="${marker}"]`).forEach(el => {
-      el.setAttribute('data-original', cfg.photos.couplePhoto)
-    })
-  })
-
-  document.querySelectorAll('img[src*="WhatsApp_Image"]').forEach(img => {
-    img.src = cfg.photos.couplePhoto
-  })
-
-  document.querySelectorAll('[data-original*="WhatsApp_Image"]').forEach(el => {
-    el.setAttribute('data-original', cfg.photos.couplePhoto)
-  })
+  // Первый экран — неизменяемый hero-конверт master-шаблона.
+  // Портрет клиента не подставляется сюда: его разрешено использовать
+  // только в отдельном согласованном фото-блоке.
 
   const audioSource = document.querySelector('audio source')
   if (audioSource) {
