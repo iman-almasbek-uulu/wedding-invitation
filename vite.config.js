@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         shell: 'index.html',
         invitation: 'invitation.html',
+        'askar-aizhan': 'askar-aizhan/index.html',
       },
     },
   },

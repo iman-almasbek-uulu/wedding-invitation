@@ -1,6 +1,27 @@
-import cfg from '../wedding.json'
+import defaultCfg from '../wedding.json'
 
-const targetDate = new Date(`${cfg.weddingDate}T${cfg.weddingTime || '00:00'}:00`).getTime()
+let cfg = defaultCfg
+let targetDate = new Date(`${cfg.weddingDate}T${cfg.weddingTime || '00:00'}:00`).getTime()
+
+function clientSlugFromUrl() {
+  const value = new URLSearchParams(window.location.search).get('client')
+  return value && /^[a-z0-9-]+$/i.test(value) ? value : null
+}
+
+async function loadClientConfig() {
+  const slug = clientSlugFromUrl()
+  if (!slug) return
+
+  const response = await fetch(`clients/${slug}/wedding.json`, { cache: 'no-store' })
+  if (!response.ok) throw new Error(`Не удалось загрузить данные клиента: ${response.status}`)
+
+  cfg = { ...defaultCfg, ...await response.json(), clientSlug: slug }
+  targetDate = new Date(`${cfg.weddingDate}T${cfg.weddingTime || '00:00'}:00`).getTime()
+}
+
+function generatedAsset(name) {
+  return cfg.clientSlug ? `clients/${cfg.clientSlug}/generated/${name}` : `generated/${name}`
+}
 
 function ensureWeddingFonts() {
   if (document.getElementById('wedding-fonts')) return
@@ -317,23 +338,23 @@ function applyImageTextOverrides() {
   ensureDynamicStyles()
 
   document.querySelectorAll('[data-original*="_46.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-groom-label', 'generated/groom-name.png', cfg.groomName)
+    overlayGeneratedImage(el, 'wj-groom-label', generatedAsset('groom-name.png'), cfg.groomName)
   })
 
   document.querySelectorAll('[data-original*="_47.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-bride-label', 'generated/bride-name.png', cfg.brideName)
+    overlayGeneratedImage(el, 'wj-bride-label', generatedAsset('bride-name.png'), cfg.brideName)
   })
 
   document.querySelectorAll('[data-original*="_49.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-month-label', 'generated/wedding-month.png', cfg.weddingMonth)
+    overlayGeneratedImage(el, 'wj-month-label', generatedAsset('wedding-month.png'), cfg.weddingMonth)
   })
 
   document.querySelectorAll('[data-original*="_51.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-venue-label', 'generated/venue-display-name.png', cfg.venueDisplayName)
+    overlayGeneratedImage(el, 'wj-venue-label', generatedAsset('venue-display-name.png'), cfg.venueDisplayName)
   })
 
   document.querySelectorAll('[data-original*="_66.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-time-label', 'generated/wedding-time.png', cfg.weddingTime)
+    overlayGeneratedImage(el, 'wj-time-label', generatedAsset('wedding-time.png'), cfg.weddingTime)
   })
 
   document.querySelectorAll('[data-original*="_54.png"]').forEach(el => {
@@ -342,15 +363,15 @@ function applyImageTextOverrides() {
   })
 
   document.querySelectorAll('[data-original*="191712.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-heading-image', 'generated/invitation-title.png', `${cfg.invitationTitle} ${cfg.invitationSubtitle}`)
+    overlayGeneratedImage(el, 'wj-heading-image', generatedAsset('invitation-title.png'), `${cfg.invitationTitle} ${cfg.invitationSubtitle}`)
   })
 
   document.querySelectorAll('[data-original*="_52.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-host-left-label', 'generated/host-left-name.png', cfg.hostNameLeft)
+    overlayGeneratedImage(el, 'wj-host-left-label', generatedAsset('host-left-name.png'), cfg.hostNameLeft)
   })
 
   document.querySelectorAll('[data-original*="_69.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-host-right-label', 'generated/host-right-name.png', cfg.hostNameRight)
+    overlayGeneratedImage(el, 'wj-host-right-label', generatedAsset('host-right-name.png'), cfg.hostNameRight)
   })
 }
 
@@ -375,7 +396,7 @@ function replacePlainText() {
     const text = el.textContent.trim()
 
     if (text.includes('Биз бул күндү өзгөчө') || text.includes('Ð‘Ð¸Ð· Ð±ÑƒÐ»')) {
-      replaceWithGeneratedImage(el, 'wj-invitation-image', 'generated/invitation-text.png', cfg.invitationText)
+      replaceWithGeneratedImage(el, 'wj-invitation-image', generatedAsset('invitation-text.png'), cfg.invitationText)
       return
     }
 
@@ -587,7 +608,13 @@ function applyConfig() {
   watchCountdown()
 }
 
-function start() {
+async function start() {
+  try {
+    await loadClientConfig()
+  } catch (error) {
+    console.error(error)
+  }
+
   applyConfig()
   setTimeout(applyConfig, 500)
   setTimeout(applyConfig, 1500)

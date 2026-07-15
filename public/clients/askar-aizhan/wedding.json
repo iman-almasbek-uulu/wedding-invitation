@@ -1,0 +1,31 @@
+{
+  "_comment": "Демо-клиент. Все данные, фото и музыка изолированы в этой папке.",
+  "groomName": "Аскар",
+  "brideName": "Айжан",
+  "weddingDate": "2026-09-12",
+  "weddingDay": "12",
+  "weddingMonth": "Сентябрь",
+  "weddingTime": "18:30",
+  "invitationTitle": "Үйлөнүү тойго",
+  "invitationSubtitle": "Чакыруу",
+  "hostNameLeft": "Бакыт",
+  "hostNameRight": "Айгүл",
+  "venueName": "тойкана",
+  "venueDisplayName": "AK BATA",
+  "venueStreet": "Жибек Жолу көч., 121",
+  "venueCity": "Бишкек",
+  "venueMapUrl": "https://2gis.kg/bishkek/search/AK%20BATA",
+  "invitationText": "Биздин жаңы жашообуздун эң бактылуу күнүн сиздер менен бөлүшкүбүз келет. Сиздерди үйлөнүү үлпөт тоюбузга чакырабыз!",
+  "contacts": [
+    {
+      "label": "Бакыт",
+      "phone": "+996 555 123 456",
+      "whatsapp": "996555123456"
+    }
+  ],
+  "photos": {
+    "ogImage": "clients/askar-aizhan/couple-portrait.png",
+    "couplePhoto": "clients/askar-aizhan/couple-portrait.png"
+  },
+  "audioSrc": "clients/askar-aizhan/romantic-instrumental.mp3"
+}
