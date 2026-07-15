@@ -6,6 +6,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        shell: 'index.html',
+        invitation: 'invitation.html',
+      },
+    },
   },
 
   server: {
