@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   root: '.',
+  // GitHub Pages publishes this repository below /wedding-invitation/.
+  base: '/wedding-invitation/',
 
   build: {
     outDir: 'dist',
