@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 
+const isVercelBuild = process.env.VERCEL === '1' || process.env.VERCEL === 'true'
+
 export default defineConfig({
   root: '.',
-  // GitHub Pages publishes this repository below /wedding-invitation/.
-  base: '/wedding-invitation/',
+  // GitHub Pages publishes below /wedding-invitation/; Vercel serves from the domain root.
+  base: isVercelBuild ? '/' : '/wedding-invitation/',
 
   build: {
     outDir: 'dist',
