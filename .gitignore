@@ -1,4 +1,9 @@
 .vercel
 node_modules
-dist
+dist/
+.graphify/
+graphify-out/
 temp_db_query*.py
+# Реальные клиенты живут только вне публичного template-репозитория.
+client-vault/
+private/

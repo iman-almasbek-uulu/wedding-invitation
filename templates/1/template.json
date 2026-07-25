@@ -1,0 +1,50 @@
+{
+  "id": "1",
+  "name": "1",
+  "category": "wedding",
+  "status": "ready",
+  "preview": "preview.svg",
+  "source": {
+    "entry": "index.html",
+    "runtime": "src/main.js",
+    "demo": "demo.json"
+  },
+  "generatedAssets": {
+    "decorativeOnly": true,
+    "allowed": [
+      "generated/groom-name.png",
+      "generated/bride-name.png"
+    ]
+  },
+  "catalog": {
+    "title": "Свадебное приглашение №1",
+    "label": "Свадьба",
+    "description": "Тёмный вечерний свадебный шаблон с конвертом, таймером, картой и RSVP.",
+    "style": "elegant",
+    "packageLevel": "standard",
+    "priceRange": "Standard",
+    "tags": ["wedding", "mobile", "rsvp", "countdown", "map"],
+    "features": ["Мобильный формат", "Конверт на первом экране", "Таймер", "Карта", "RSVP-форма"],
+    "recommendedUse": "Для современной вечерней свадьбы с выразительной каллиграфией."
+  },
+  "blocks": {
+    "hero": {
+      "fields": ["groomName", "brideName", "weddingDate", "subtitle"]
+    },
+    "countdown": {
+      "fields": ["weddingDate", "weddingTime"]
+    },
+    "venue": {
+      "fields": ["venueName", "venueAddress", "city"]
+    },
+    "schedule": {
+      "fields": ["schedule"]
+    },
+    "dressCode": {
+      "fields": ["dressCode"]
+    },
+    "rsvp": {
+      "fields": ["rsvp"]
+    }
+  }
+}

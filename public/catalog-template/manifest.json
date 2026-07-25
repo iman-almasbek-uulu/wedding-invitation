@@ -1,0 +1,31 @@
+{
+  "slug": "1",
+  "name": "1",
+  "title": "Свадебное приглашение №1",
+  "category": "wedding",
+  "label": "Свадьба",
+  "description": "Тёмный вечерний свадебный шаблон с конвертом, таймером, картой и RSVP.",
+  "style": "elegant",
+  "packageLevel": "standard",
+  "priceRange": "Standard",
+  "tags": [
+    "wedding",
+    "mobile",
+    "rsvp",
+    "countdown",
+    "map"
+  ],
+  "features": [
+    "Мобильный формат",
+    "Конверт на первом экране",
+    "Таймер",
+    "Карта",
+    "RSVP-форма"
+  ],
+  "recommendedUse": "Для современной вечерней свадьбы с выразительной каллиграфией.",
+  "isReady": true,
+  "demoPath": "/templates/1/",
+  "previewImage": "/templates/1/preview.svg",
+  "generatedFrom": "templates/1/template.json",
+  "generatedAt": "2026-07-22T15:22:37.719Z"
+}

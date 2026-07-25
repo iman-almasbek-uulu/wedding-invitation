@@ -1,0 +1,47 @@
+{
+  "_comment": "Демо-данные шаблона. Для клиентского сайта используется отдельная приватная копия проекта.",
+  "template": {
+    "slug": "1",
+    "name": "1",
+    "title": "Свадебное приглашение №1",
+    "category": "wedding",
+    "label": "Свадьба",
+    "description": "Тёмный вечерний свадебный шаблон с конвертом, таймером, картой и RSVP.",
+    "style": "elegant",
+    "packageLevel": "standard",
+    "priceRange": "Standard",
+    "tags": ["wedding", "mobile", "rsvp", "countdown", "map"],
+    "features": ["Мобильный формат", "Конверт на первом экране", "Таймер", "Карта", "RSVP-форма"],
+    "recommendedUse": "Для современной вечерней свадьбы с выразительной каллиграфией.",
+    "isReady": true,
+    "demoPath": "/templates/1/"
+  },
+  "groomName": "Бекзат",
+  "brideName": "Айзада",
+  "weddingDate": "2027-05-17",
+  "weddingDay": "17",
+  "weddingMonth": "Май",
+  "weddingTime": "18:30",
+  "invitationTitle": "Үйлөнүү тойго",
+  "invitationSubtitle": "Чакыруу",
+  "hostNameLeft": "Таалайбек",
+  "hostNameRight": "Айгүл",
+  "venueName": "ресторан",
+  "venueDisplayName": "ASMAN",
+  "venueStreet": "Чүй проспекти, 147",
+  "venueCity": "Бишкек",
+  "venueMapUrl": "https://www.google.com/maps/search/?api=1&query=42.8746,74.5698",
+  "invitationText": "Бул бактылуу күнүбүздү жакындарыбыз менен бөлүшүп, сиздерди үйлөнүү тоюбузга чакырабыз!",
+  "contacts": [
+    {
+      "label": "Эльдар",
+      "phone": "+996 555 123 456",
+      "whatsapp": "996555123456"
+    }
+  ],
+  "photos": {
+    "ogImage": "assets/images/photo.jpg",
+    "couplePhoto": "assets/images/image.jpeg"
+  },
+  "audioSrc": "assets/music/music.mp3"
+}

@@ -1,26 +1,10 @@
-import defaultCfg from '../wedding.json'
+import defaultCfg from '../demo.json'
 
 let cfg = defaultCfg
 let targetDate = new Date(`${cfg.weddingDate}T${cfg.weddingTime || '00:00'}:00`).getTime()
 
-function clientSlugFromUrl() {
-  const value = new URLSearchParams(window.location.search).get('client')
-  return value && /^[a-z0-9-]+$/i.test(value) ? value : null
-}
-
-async function loadClientConfig() {
-  const slug = clientSlugFromUrl()
-  if (!slug) return
-
-  const response = await fetch(`clients/${slug}/wedding.json`, { cache: 'no-store' })
-  if (!response.ok) throw new Error(`Не удалось загрузить данные клиента: ${response.status}`)
-
-  cfg = { ...defaultCfg, ...await response.json(), clientSlug: slug }
-  targetDate = new Date(`${cfg.weddingDate}T${cfg.weddingTime || '00:00'}:00`).getTime()
-}
-
 function generatedAsset(name) {
-  return cfg.clientSlug ? `clients/${cfg.clientSlug}/generated/${name}` : `generated/${name}`
+  return `generated/${name}`
 }
 
 function ensureWeddingFonts() {
@@ -66,6 +50,32 @@ function ensureDynamicStyles() {
       overflow: visible !important;
     }
 
+    .wj-live-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8%;
+      color: #54332a;
+      font-family: 'Forum', Georgia, serif;
+      font-size: clamp(16px, 5vw, 31px);
+      font-weight: 400;
+      line-height: 1.1;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .wj-live-heading {
+      font-size: clamp(22px, 7vw, 42px);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .wj-live-host {
+      font-size: clamp(14px, 4.3vw, 24px);
+    }
+
     .wj-text-image-host {
       position: relative !important;
       color: transparent !important;
@@ -97,17 +107,22 @@ function ensureDynamicStyles() {
       transform: translateY(-52px);
     }
 
-    .wj-host-left-label {
-      inset: -58% -34% -50% 6% !important;
-      width: 128%;
-      height: 214%;
+    /* Footer: the source template keeps both name anchors at the same origin.
+       Use approved fixed pixel offsets rather than percentage offsets: the latter
+       scale with the desktop anchor and can push names beyond the viewport. */
+    .wj-host-left-label,
+    .wj-host-right-label {
+      top: -58px !important;
+      right: auto !important;
+      bottom: auto !important;
+      width: 128px !important;
+      height: 214px !important;
+      object-fit: contain !important;
+      z-index: 1;
     }
 
-    .wj-host-right-label {
-      inset: -58% 22% -50% -38% !important;
-      width: 128%;
-      height: 214%;
-    }
+    .wj-host-left-label { left: -100px !important; }
+    .wj-host-right-label { left: 80px !important; }
 
     .wj-heading-image {
       transform: translateY(-13%) scale(2.08);
@@ -294,6 +309,21 @@ function overlayGeneratedImage(host, className, src, alt) {
   host.appendChild(generated)
 }
 
+function overlayLiveText(host, className, text) {
+  host.classList.add('wj-overlay-host')
+  const img = host.tagName === 'IMG' ? host : host.querySelector('img')
+  if (img) img.classList.add('wj-hidden-img')
+
+  let label = host.querySelector('.wj-live-label')
+  if (!label) {
+    label = document.createElement('span')
+    label.className = 'wj-live-label'
+    host.appendChild(label)
+  }
+  label.className = `wj-live-label ${className}`
+  label.textContent = text
+}
+
 function replaceWithGeneratedImage(el, className, src, alt) {
   el.classList.add('wj-text-image-host')
   const { height } = el.getBoundingClientRect()
@@ -346,15 +376,15 @@ function applyImageTextOverrides() {
   })
 
   document.querySelectorAll('[data-original*="_49.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-month-label', generatedAsset('wedding-month.png'), cfg.weddingMonth)
+    overlayLiveText(el, 'wj-live-month', cfg.weddingMonth)
   })
 
   document.querySelectorAll('[data-original*="_51.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-venue-label', generatedAsset('venue-display-name.png'), cfg.venueDisplayName)
+    overlayLiveText(el, 'wj-live-venue', cfg.venueDisplayName || cfg.venueName)
   })
 
   document.querySelectorAll('[data-original*="_66.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-time-label', generatedAsset('wedding-time.png'), cfg.weddingTime)
+    overlayLiveText(el, 'wj-live-time', cfg.weddingTime)
   })
 
   document.querySelectorAll('[data-original*="_54.png"]').forEach(el => {
@@ -363,7 +393,7 @@ function applyImageTextOverrides() {
   })
 
   document.querySelectorAll('[data-original*="191712.png"]').forEach(el => {
-    overlayGeneratedImage(el, 'wj-heading-image', generatedAsset('invitation-title.png'), `${cfg.invitationTitle} ${cfg.invitationSubtitle}`)
+    overlayLiveText(el, 'wj-live-heading', `${cfg.invitationTitle} ${cfg.invitationSubtitle}`)
   })
 
   document.querySelectorAll('[data-original*="_52.png"]').forEach(el => {
@@ -396,7 +426,12 @@ function replacePlainText() {
     const text = el.textContent.trim()
 
     if (text.includes('Биз бул күндү өзгөчө') || text.includes('Ð‘Ð¸Ð· Ð±ÑƒÐ»')) {
-      replaceWithGeneratedImage(el, 'wj-invitation-image', generatedAsset('invitation-text.png'), cfg.invitationText)
+      el.textContent = cfg.invitationText
+      el.style.color = '#54332a'
+      el.style.fontFamily = "'Forum', Georgia, serif"
+      el.style.fontSize = '18px'
+      el.style.lineHeight = '1.35'
+      el.style.textAlign = 'center'
       return
     }
 
@@ -605,12 +640,6 @@ function applyConfig() {
 }
 
 async function start() {
-  try {
-    await loadClientConfig()
-  } catch (error) {
-    console.error(error)
-  }
-
   applyConfig()
   setTimeout(applyConfig, 500)
   setTimeout(applyConfig, 1500)
